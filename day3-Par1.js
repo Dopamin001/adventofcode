@@ -53,5 +53,3 @@ async function calculate (data) {
 }
 
 main()
-
-//es muss einen gammaRate geben (0-11) der für jede spalte das binary hoch oder runterzählt
