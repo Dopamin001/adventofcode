@@ -74,7 +74,6 @@ function bingo(data, numbers) {
       }
     }
   }
-  console.log("t :", findArray())
   const correctArray = findArray();
   const rightArray = correctArray[0];
   const correctNumber = correctArray[1];
@@ -91,31 +90,48 @@ function bingo(data, numbers) {
           thirdCounter++;  
         }
         if (JSON.stringify(correctRow) == JSON.stringify(rightArray) ||  (JSON.stringify(correctColumn) == JSON.stringify(rightArray))) {
-            let searchArray = [];
             let rightArrayofNumbers = [];
             let ArrayofNumbers = [];
+            let search2Array = []
+            let booleanstrue = [];
             let solution = 0;
-            searchArray.push(field)
-            // console.log(searchArray)
-            searchArray.map(array => {
-                array.map(elements => {
-                    elements.map(e => {
-                        ArrayofNumbers.push(Number(e))
-                    })
-                })
+            search2Array.push(field)
+            let searchArray = search2Array[0]
+            console.log(searchArray);
+            let column = searchArray.map(c => (c[0]))
+            console.log(column)
+
+            function controll () {
+              for (let i = 0; i < numbers.length; i++) {
+                for (let j = 0; j <  5; j++) {
+                    for (let k = 0; k < 5; k++) {
+                      if (searchArray[j][k] === numbers[i]) {
+                        searchArray[j][k] = true;
+                        booleanstrue.push( searchArray[j][k])
+                      }
+                      if (searchArray[k][j] === numbers[i]) {
+                        searchArray[k][j] = true;
+                        booleanstrue.push( searchArray[k][j])
+                      }
+                      let column = searchArray.map(c => (c[k]))
+                      if(searchArray[j].every(everyElementIsTrue) || column.every(everyElementIsTrue)) {
+                        return searchArray
+                      }
+                    }
+                }
+              }
+            }
+
+            const controll2 = controll()
+            console.log("controll2: ",controll2)
+            const differecne = controll2.map(array => array.filter(x => x !== true))
+            const rightNumbers = differecne.flat();
+            rightNumbers.map(e => {
+              ArrayofNumbers.push(Number(e))
             })
 
-            rightArray.map(e => {
-                // console.log(e)
-                rightArrayofNumbers.push(Number(e))
-            })
-            console.log(ArrayofNumbers)
-            console.log(rightArrayofNumbers)
-
-            const difference = ArrayofNumbers.filter( x => !rightArrayofNumbers.includes(x));
-            console.log(difference)
-            for(let i = 0; i < difference.length; i++) {
-                solution += difference[i]
+            for(let i = 0; i < ArrayofNumbers.length; i++) {
+                solution += ArrayofNumbers[i]
             }
             console.log(solution * correctNumber)
         } 
